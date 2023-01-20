@@ -1,0 +1,76 @@
+﻿@using WebMatrix.Data
+
+
+@{
+    Validation.RequireField("trainerid");
+    Validation.RequireField("name");
+    Validation.RequireField("mobnum");
+    Validation.RequireField("scheduleid");
+   
+
+    var trainerid = "";
+    var name = "";
+    var mobnum = "";
+  
+    var scheduleid = "";
+
+
+
+    if (IsPost && Validation.IsValid())
+    {
+        trainerid = Request.Form["trainerid"];
+        name = Request.Form["name"];
+        mobnum = Request.Form["mobnum"];
+        scheduleid = Request.Form["scheduleid"];
+        
+
+        var db = Database.Open("Gym");
+        var insertCommand = "INSERT INTO  Trainor (trainerid,name,mobnum,scheduleid) Values(@0, @1, @2,@3)";
+        db.Execute(insertCommand, trainerid,name, mobnum, scheduleid);
+        Response.Redirect("~/showTrainor");
+    }
+
+
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gym</title>
+</head>
+
+
+<body style="background-color: Beige; ">
+    <H1 center>Trainor Page</h1>
+
+    <img id="bg" src="tr.jpg" width="1000" height="500"><br><br>
+    <form method="post">
+
+        please Enter Trainor Id:<input type="text" name="trainerid" maxlength="25" value="@Request.Form["trainerid"]"><br><br>
+        please Enter Tranor name:<input type="text" name="name" maxlength="25" value="@Request.Form["name"]"><br><br>
+        please Enter Tranor mobile number:<input type="text" name="mobnum" maxlength="30" value="@Request.Form["mobnum"]"><br><br>
+
+        please Enter  schedule id:<input type="text" name="scheduleid" maxlength="30" value="@Request.Form["scheduleid"]"><br><br>
+
+        please select Gender:
+        <select name="gender" size="1">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+        </select>
+
+
+
+        <h1>Comment:</h1>
+<textarea name="comment" cols="100" rows="4">
+</textarea><br><br>
+        <center><input type="submit" value="Insert Trainor" name="ADD"></center>
+        <br><br>
+
+        <center> <A href="~/Gymsystemdesign.cshtml"</A>Back</center><br>
+
+    </form>
+</body>
+</html>
+

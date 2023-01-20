@@ -1,0 +1,94 @@
+﻿@using WebMatrix.Data
+
+
+@{
+    Validation.RequireField("name");
+ 
+
+
+    var name = "";
+   
+
+
+    if (IsPost)
+    {
+        name = Request.Form["name"];
+        var db = Database.Open("Gym");
+        var deleteCommand = "DELETE FROM Customer WHERE name = @0";
+        db.Execute(deleteCommand, name);
+        Response.Redirect("Displaycustomer");
+    }
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta charset="utf-8" />
+    <title>Information</title>
+    <style type="text/css">
+        .grid {
+            font-family: Amatic SC;
+            margin: 4px;
+            border-collapse: collapse;
+            width: 600px;
+        }
+
+            .grid th, .grid td {
+                border: 1px solid #C0C0C0;
+                padding: 5px;
+            }
+
+        .head {
+            background-color: #E8E8E8;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        .alt {
+            background-color: #E8E8E8;
+            color: #000;
+        }
+    </style>
+</head>
+<body text-align: center;
+      font-family: Amatic SC;
+      font-size: 50px;
+      margin-left: 150px;
+      margin-right: 150px;">
+    <img id="bg" src="g.jpg" width="626" height="352"><br><br>
+    <form action="" method="post">
+
+
+
+        <p>
+            <h1 style="font-size: 30px; font-family: Amatic SC; text-align: center">
+                <label for="Name">
+                    Name of customer you want to  delete
+               </label>
+          
+            <input type="text" name="Name" value="@Request.Form["Name"]" /><br>
+
+
+
+            <input type="submit" name="Delete" value="Delete" /></h1><br>
+            <center> <A href="~/Gymsystemdesign.cshtml"</A><h3> Back</h3></center><br>
+        </p>
+
+    </form>
+
+</body>
+</html>

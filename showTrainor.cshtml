@@ -1,0 +1,57 @@
+﻿
+@{
+    var db = Database.Open("Gym");
+    var selectedData = db.Query("SELECT * FROM Trainor");
+    var grid = new WebGrid(source: selectedData, rowsPerPage: 4);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Customer</title>
+    <style type="text/css">
+        .grid {
+            margin: 4px;
+            border-collapse: collapse;
+            width: 600px;
+        }
+
+            .grid th, .grid td {
+                border: 1px solid #C0C0C0;
+                padding: 5px;
+            }
+
+        .head {
+            background-color: #E8E8E8;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        .alt {
+            background-color: #E8E8E8;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Trainor</h1>
+    <div>
+        @grid.GetHtml(
+
+        tableStyle: "grid",
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns
+        (
+        grid.Column("trainerid"),
+        grid.Column("name"),
+        grid.Column("mobnum"),
+        grid.Column("scheduleid")
+
+        )
+        )
+    </div>   <center> <A href="~/Gymsystemdesign.cshtml"</A>Back</center><br>
+</body>
+</html>
+

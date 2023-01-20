@@ -1,0 +1,32 @@
+﻿
+@{
+    var db = Database.Open("Gym");
+    var selectCommand = "SELECT * FROM Customer";
+    var searchTerm = "";
+    if (!Request.QueryString["searchname"].IsEmpty())
+    {
+        selectCommand = "SELECT * FROM Customer WHERE name = @0";
+        searchTerm = Request.QueryString["searchname"];
+    }
+    var selectedData = db.Query(selectCommand, searchTerm);
+    var grid = new WebGrid(source: selectedData, defaultSort: "name", rowsPerPage: 3);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<body style="background-color: Ivory; ">
+    <form method="get">
+        <div>
+            <label for="Searchname"> look for customer name:</label>
+            <input type="text" name="Searchname" value="" />
+            <input type="Submit" value="Searchname" /><br />
+
+        </div> <center> <A href="~/Gymsystemdesign.cshtml"</A>Back</center><br>
+    </form>
+
+   
+    <div>
+        @grid.GetHtml()
+    </div>
+</body>
+</html>

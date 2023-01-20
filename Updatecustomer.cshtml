@@ -1,0 +1,74 @@
+﻿@using WebMatrix.Data
+@{var customerid = "";
+    var name = "";
+    var age = "";
+    var mobilenum = "";
+    var trainerid = "";
+
+    if (IsPost)
+    {
+        customerid = Request.Form["customerid"];
+        name = Request.Form["name"];
+        age = Request.Form["age"];
+        mobilenum = Request.Form["mobilenum"];
+        trainerid = Request.Form["trainerid"];
+
+        var db = Database.Open("Gym");
+        var updateCommand = "UPDATE Customer SET customerid=@0, name=@1, age=@2, mobilenum=@3,trainerid=@4 WHERE customerid=@0";
+        db.Execute(updateCommand, customerid, name, age, mobilenum, trainerid);
+        Response.Redirect("~/Displaycustomer");
+    }
+}
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gym</title>
+</head>
+
+
+<body>
+    <MARQUEE BGCOLOR="#FF5733" HEIGHT="80" WIDTH="100%">
+        <h1> Welcome To Our Gym</h1>
+    </MARQUEE>
+
+    <img id="bg" src="f.jpg" width="1800" height="500"><br><br>
+    <form method="post">
+
+        please enter your old Id:<input type="text" name="customerid" maxlength="25" value="@Request.Form["customerid"]"><br><br>
+        please enter your name:<input type="text" name="name" maxlength="25" value="@Request.Form["name"]"><br><br>
+        please enter your age:<input type="text" name="age" maxlength="30" value="@Request.Form["age"]"><br><br>
+
+        please enter your new mobile number:<input type="text" name="mobilenum" maxlength="30" value="@Request.Form["mobilenum"]"><br><br>
+        please enter your trainerid:<input type="text" name="trainerid" maxlength="30" value="@Request.Form["trainerid"]"><br><br>
+
+        plase select your Gender:
+        <select name="gender" size="1">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+        </select>
+
+        <h1>I am interested in:</h1><br>
+        <input type="checkbox" name="chack" value="Box Jump" checked>Box Jump<br>
+        <input type="checkbox" name="chack" value="Swimming">Swimming<br>
+        <input type="checkbox" name="chack" value="Heavy calisthenics">Heavy calisthenics<br>
+        <h1>please choose Participation Type </h1>
+        <input type="radio" name="Participation" value="monthly">Monthly<br>
+        <input type="radio" name="Participation" value="yearly">Yearly<br>
+
+        <h1>Comment:</h1>
+<textarea name="comment" cols="100" rows="4">
+</textarea><br><br>
+        <center><input type="submit" value="Update Customer" name="Update"></center>
+        <br><br>
+        <center> <A href="~/Gymsystemdesign.cshtml"</A><h3> Back</h3></center><br>
+
+
+    </form>
+</body>
+</html>
+
+

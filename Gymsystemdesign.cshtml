@@ -1,0 +1,92 @@
+﻿@using WebMatrix.Data
+
+
+
+@{
+    Validation.RequireField("customerid");
+    Validation.RequireField("name");
+    Validation.RequireField("age");
+    Validation.RequireField("mobilenum");
+    Validation.RequireField("trainerid");
+
+    var customerid = "";
+    var name = "";
+    var age = "";
+    var mobilenum = "";
+    var trainerid = "";
+
+
+
+    if (IsPost && Validation.IsValid())
+    {
+        customerid = Request.Form["customerid"];
+        name = Request.Form["name"];
+        age = Request.Form["age"];
+        mobilenum = Request.Form["mobilenum"];
+        trainerid = Request.Form["trainerid"];
+
+        var db = Database.Open("Gym");
+        var insertCommand = "INSERT INTO  Customer (customerid,name, age, mobilenum,trainerid) Values(@0, @1, @2,@3,@4)";
+        db.Execute(insertCommand, customerid,name, age, mobilenum, trainerid);
+        Response.Redirect("~/Displaycustomer");
+    }
+
+
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gym</title>
+</head>
+
+
+<body style="background-color: LavenderBlush;">
+    <MARQUEE BGCOLOR="#FF5733" HEIGHT="80" WIDTH="100%">
+      <h1> Welcome To Our Gym</h1>
+        </MARQUEE>
+
+            <img id="bg" src="training-studio-1.png" width="1800" height="500">
+            <form method="post">
+
+                please enter your Id:<input type="text" name="customerid" maxlength="25" value="@Request.Form["customerid"]"><br><br>
+                please enter your name:<input type="text" name="name" maxlength="25" value="@Request.Form["name"]"><br><br>
+                please enter your age:<input type="text" name="age" maxlength="30" value="@Request.Form["age"]"><br><br>
+
+                please enter your mobile number:<input type="text" name="mobilenum" maxlength="30" value="@Request.Form["mobilenum"]"><br><br>
+                please enter your trainerid:<input type="text" name="trainerid" maxlength="30" value="@Request.Form["trainerid"]"><br><br>
+
+                plase select your Gender:
+                <select name="gender" size="1">
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                </select>
+
+                <h1>I am interested in:</h1><br>
+                <input type="checkbox" name="chack" value="Box Jump" checked>Box Jump<br>
+                <input type="checkbox" name="chack" value="Swimming">Swimming<br>
+                <input type="checkbox" name="chack" value="Heavy calisthenics">Heavy calisthenics<br>
+                <h1>please choose Participation Type </h1>
+                <input type="radio" name="Participation" value="monthly">Monthly<br>
+                <input type="radio" name="Participation" value="yearly">Yearly<br>
+
+                <h1>Comment:</h1>
+<textarea name="comment" cols="100" rows="4">
+</textarea><br><br>
+                <center><input type="submit" value="Insert Customer" name="ADD"></center>
+                <br><br>
+
+                <center> <A href="~/Add trainor.cshtml"</A>Go To Add tranier</center><br>
+                <center> <A href="~/search.cshtml"</A>Go To Search Customer</center><br>
+                <center> <A href="~/Schedule.cshtml"</A>Go To Show Schedule</center><br>
+                <center> <A href="~/Deletecust.cshtml"</A>Go To Delete Customer</center><br>
+                <center> <A href="~/Updatecustomer.cshtml"</A>Go To Update Customer</center><br>
+                <center> <A href="https://goldsgym.jo/demo/%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A%D8%A9/"</A>Go to the Website</center><br>
+
+
+            </form>
+</body>
+</html>
+
